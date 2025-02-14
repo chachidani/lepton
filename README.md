@@ -1,6 +1,6 @@
 # Lepton_Web_Development_Assassement
 
-[📺 Watch the Demo Video](https://github.com/chachidani/lepton/raw/main/src/assets/lepton_record.mp4)
+[📺 Watch the Demo Video](https://github.com/chachidani/lepton/raw/main/lepton_record.mp4)
 
 
 
