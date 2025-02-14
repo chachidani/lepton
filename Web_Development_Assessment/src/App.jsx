@@ -1,5 +1,5 @@
-import  { useState, useEffect } from "react";
-import Navbar  from "./components/Navbar";
+import { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
 import InfoCard from "./components/Infocard";
 
 const API_URL = "https://jsonplaceholder.typicode.com/posts";
@@ -16,8 +16,9 @@ const App = () => {
   useEffect(() => {
     const cachedData = localStorage.getItem("posts");
     if (cachedData) {
-      setPosts(JSON.parse(cachedData));
-      setFilteredPosts(JSON.parse(cachedData));
+      const data = JSON.parse(cachedData);
+      setPosts(data);
+      setFilteredPosts(data);
       setLoading(false);
     } else {
       fetch(API_URL)
@@ -36,36 +37,33 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredPosts(
-      posts.filter((post) =>
-        post.title.toLowerCase().includes(search.toLowerCase())
-      )
-    );
+    const searchTerm = search.trim().toLowerCase();
+    if (!searchTerm) {
+      setFilteredPosts(posts);
+    } else {
+      const filtered = posts.filter(post => post.title.toLowerCase().includes(searchTerm));
+      setFilteredPosts(filtered);
+    }
+    setPage(1); // Reset pagination when searching
   }, [search, posts]);
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  const handleSearch = (e) => setSearch(e.target.value);
 
   const indexOfLastPost = page * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
-    <>
-    <div className="p-10  mx-auto bg-amber-50 ">
-    <Navbar search={search} handleSearch={handleSearch} />
-    
+    <div className="p-10 mx-auto bg-amber-50 min-h-screen">
+      <Navbar search={search} handleSearch={handleSearch} />
       {loading && <p className="text-center mt-4">Loading...</p>}
       {error && <p className="text-red-500 text-center mt-4">{error}</p>}
       {!loading && !error && (
-        <div className=" flex-col w-full">
-        <div className=" grid grid-cols-3  place-content-around place-items-center gap-y-10">
-          
-          { 
-          currentPosts.map((post , index) => (
-           <InfoCard key={post.id} title={post.title} body={post.body} index={index}/>
-          ))}
+        <div className="flex-col w-full">
+          <div className="grid grid-cols-3 place-content-around place-items-center gap-y-10 gap-x-4">
+            {currentPosts.map((post, index) => (
+              <InfoCard key={post.id} title={post.title} body={post.body} index={index} />
+            ))}
           </div>
           <div className="flex justify-between mt-4 p-16">
             <button
@@ -86,7 +84,6 @@ const App = () => {
         </div>
       )}
     </div>
-    </>
   );
 };
 
