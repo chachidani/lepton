@@ -1,6 +1,6 @@
 # Lepton_Web_Development_Assassement
 
-[Watch the Demo Video](https://raw.githubusercontent.com/chachi/lepton/Web_Development_Assessment/assets/lepton_record.mp4)
+[Watch the Demo Video](https://raw.githubusercontent.com/chachi/lepton/Web_Development_Assessment/src/assets/lepton_record.mp4)
 
 
 This project is a React application that displays information cards fetched from a public API. The app supports searching, filtering, pagination, and an expandable card view.
